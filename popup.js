@@ -1,4 +1,24 @@
+const days_of_the_week = {
+  "0" : "Sunday",
+  "1" : "Monday",
+  "2" : "Tuesday",
+  "3" : "Wednesday",
+  "4" : "Thursday",
+  "5" : "Friday",
+  "6" : "Saturday",
+};
+
 document.addEventListener("DOMContentLoaded", function () {
+  var daysInputSelect = document.getElementById('day');
+  if (daysInputSelect) {
+    for (const property in days_of_the_week) {
+        var opt = document.createElement('option');
+        opt.value = property;
+        opt.innerHTML = days_of_the_week[property];
+        daysInputSelect.appendChild(opt);
+    }
+  }
+
   var addSiteButton = document.getElementById("addSite");
   addSiteButton.addEventListener("click", function () {
     var siteInput = document.getElementById("siteInput").value;
@@ -17,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         blockedSites.push({
           id : last_added_id + 1,
           url: siteInput,
+          label: `${siteInput} - ${days_of_the_week[day]} (${block_start_time} - ${block_end_time})`,
           day: day,
           start: block_start_time,
           end: block_end_time
@@ -43,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
       blockedList.innerHTML = "";
       blockedSites.forEach(function (site) {
         var li = document.createElement("li");
-        li.textContent = site.url;
+        li.textContent = site.label ? site.label : site.url;
 
         // add a remove button
 
