@@ -21,7 +21,11 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## Tutorial
 To learn how to build this project, check out the tutorial on [YouTube](https://youtu.be/wZcU07zfMSk).
 
-## UPDATE
+<br/>
+<br />
+---
+
+## Updates:
 - [x] Added editing functionality
 - [x] Added day-of-the-week based blocking
 - [x] Added time based blocking
