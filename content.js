@@ -26,7 +26,3 @@ chrome.storage.sync.get("blockedSites", function(data) {
     document.documentElement.innerHTML = "Blocked.";
   }
 });
-
-// TODO:
-//  - edit
-//  - checkbox days
