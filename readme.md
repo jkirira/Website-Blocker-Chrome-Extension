@@ -23,7 +23,6 @@ To learn how to build this project, check out the tutorial on [YouTube](https://
 
 <br/>
 <br />
----
 
 ## Updates:
 - [x] Added editing functionality
