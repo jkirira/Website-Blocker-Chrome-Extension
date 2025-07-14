@@ -25,6 +25,24 @@ document.addEventListener("DOMContentLoaded", function () {
     checkbox.type = "checkbox";
     checkbox.name = "day";
     checkbox.value = key;
+    if (key == 'everyday') {
+      checkbox.addEventListener('change', function (e) {
+        var day_checkboxes = document.querySelectorAll('input[name="day"]');
+        if (e.target.checked) {
+          day_checkboxes.forEach(checkbox => {
+            if (checkbox.value !== "everyday") {
+              checkbox.disabled = true;
+              checkbox.checked = false;
+            }
+          })
+        } else {
+          day_checkboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+            checkbox.checked = false;
+          })
+        }
+      });
+    }
     div.appendChild(checkbox);
 
     var label = document.createElement('label');
@@ -143,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("blocked_site_id").value = editSite.id;
               document.getElementById("siteInput").value = editSite.url;
               day_checkboxes.forEach(checkbox => {
+                checkbox.disabled = false
                 checkbox.checked = editSite.days.some(day => day == checkbox.value)
               })
               document.getElementById("block_start_time").value = editSite.start;
@@ -187,7 +206,10 @@ document.addEventListener("DOMContentLoaded", function () {
     addSiteButton.innerHTML = "Add Site";
     document.getElementById("blocked_site_id").value = null;
     document.getElementById("siteInput").value = "";
-    day_checkboxes.forEach(checkbox => checkbox.checked = false)
+    day_checkboxes.forEach(checkbox => {
+      checkbox.disabled = false;
+      checkbox.checked = false;
+    })
     document.getElementById("block_start_time").value = "00:00";
     document.getElementById("block_end_time").value = "23:59";
   }
