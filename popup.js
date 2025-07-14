@@ -63,7 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (blockedSiteId) {
         blockedSites = blockedSites.map(site => {
           if (site.id == blockedSiteId) {
-            siteData.id = blockedSiteId;
+            siteData.id = site.id;
+            siteData.active = site.active
             return siteData
           }
 
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log('last_added_id', last_added_id)
 
         siteData.id = last_added_id + 1;
+        siteData.active = true;
         blockedSites.push(siteData);
 
       }
@@ -111,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         li.appendChild(text_div)
 
         var buttons_div = document.createElement("div");
+        buttons_div.classList.add("buttons-div")
 
         // add an edit button
         var editButton = document.createElement("button");
@@ -153,6 +156,42 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         });
         buttons_div.appendChild(removeButton);
+
+        // add a activate/deactivate switch
+        /*
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        */
+        var activateSwitch = document.createElement("label");
+        activateSwitch.classList.add("switch");
+
+        var switchCheckbox = document.createElement("input");
+        switchCheckbox.type = "checkbox";
+        switchCheckbox.checked = site.active;
+        switchCheckbox.addEventListener('change', function (e) {
+          chrome.storage.sync.get("blockedSites", function (data) {
+            var blockedSites = data.blockedSites || [];
+            blockedSites = blockedSites.map(blocked_site => {
+              if (blocked_site.id == site.id) {
+                blocked_site.active = e.target.checked;
+              }
+              return blocked_site;
+            });
+
+            chrome.storage.sync.set({ blockedSites: blockedSites });
+            updateBlockedList();
+          });
+        });
+        activateSwitch.appendChild(switchCheckbox);
+
+        var switchSpan = document.createElement("span");
+        switchSpan.classList.add("slider");
+        switchSpan.classList.add("round");
+        activateSwitch.appendChild(switchSpan);
+
+        buttons_div.appendChild(activateSwitch);
 
         li.appendChild(buttons_div);
 

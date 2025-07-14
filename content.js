@@ -6,6 +6,8 @@ chrome.storage.sync.get("blockedSites", function(data) {
     return;
   }
 
+  // console.log('blockedSites', blockedSites);
+
   const Today = new Date();
 
   var current_day = Today.getDay()
@@ -24,7 +26,8 @@ chrome.storage.sync.get("blockedSites", function(data) {
     return (new RegExp('^' + site.url)).test(formatted_current_url) &&
             site.days.some(day => current_day == day || day == "everyday") &&
             parseFloat(formatted_current_time) > parseFloat(formatted_block_start_time) &&
-            parseFloat(formatted_current_time) < parseFloat(formatted_block_end_time)
+            parseFloat(formatted_current_time) < parseFloat(formatted_block_end_time) &&
+            site.active
   })
 
   if (!!block) {
