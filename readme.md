@@ -29,3 +29,4 @@ To learn how to build this project, check out the tutorial on [YouTube](https://
 - [x] Added day-of-the-week based blocking
 - [x] Added time based blocking
 - [ ] Discourage deleting blocked websites
+- [ ] Allow regex based blocking
