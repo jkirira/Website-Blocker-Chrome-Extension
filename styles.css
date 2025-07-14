@@ -48,7 +48,7 @@ li {
   gap: 8px;
 }
 
-input {
+input:not([type='checkbox']) {
   width: 100%;
   padding: 12px 20px;
   margin: 0;
@@ -86,4 +86,23 @@ button:hover {
 .site-item {
   display: flex;
   flex-direction: column;
+}
+
+.site-text {
+  line-height: 1.35rem;
+}
+
+.checkbox-pair {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox-div {
+  display: flex;
+  min-width: 50%;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
 }

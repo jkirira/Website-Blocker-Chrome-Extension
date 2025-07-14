@@ -10,23 +10,57 @@ const days_of_the_week = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  var daysInputSelect = document.getElementById('day');
-  for (const property in days_of_the_week) {
-      var opt = document.createElement('option');
-      opt.value = property;
-      opt.innerHTML = days_of_the_week[property];
-      daysInputSelect.appendChild(opt);
-  }
+  var parentDiv = document.getElementById('days');
+
+  var checkboxPairDiv = document.createElement('div');
+  checkboxPairDiv.classList.add('checkbox-pair');
+
+  var keys = Object.keys(days_of_the_week)
+  keys.forEach((key, index) => {
+    var div = document.createElement('div');
+    div.classList.add('checkbox-div');
+
+    var checkbox = document.createElement('input');
+    checkbox.id = days_of_the_week[key] + '_' + key
+    checkbox.type = "checkbox";
+    checkbox.name = "day";
+    checkbox.value = key;
+    div.appendChild(checkbox);
+
+    var label = document.createElement('label');
+    label.htmlFor = days_of_the_week[key] + '_' + key
+    label.textContent = days_of_the_week[key];
+    label.classList.add('checkbox-label');
+    div.appendChild(label);
+
+    checkboxPairDiv.appendChild(div);
+
+    var is_last_item = index == (keys.length - 1);
+
+    if (index % 2 !== 0 || is_last_item) {
+      parentDiv.appendChild(checkboxPairDiv);
+
+      if (!is_last_item) {
+        checkboxPairDiv = document.createElement('div');
+        checkboxPairDiv.classList.add('checkbox-pair');
+      }
+    }
+  });
 
   var addSiteButton = document.getElementById("addSite");
   addSiteButton.addEventListener("click", function () {
     var blockedSiteId = document.getElementById("blocked_site_id").value;
     var siteInput = document.getElementById("siteInput").value;
-    var day = document.getElementById("day").value;
+    var day_checkboxes = document.querySelectorAll('input[name="day"]')
     var block_start_time = document.getElementById("block_start_time").value;
     var block_end_time = document.getElementById("block_end_time").value;
 
-    console.log
+    var days = [];
+    for (var i = 0; i < day_checkboxes.length; i++) {
+      if (day_checkboxes[i].checked) {
+        days.push(day_checkboxes[i].value)
+      }
+    }
 
     if (!siteInput) {
       return;
@@ -37,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var siteData = {
         url: siteInput,
-        label: `${siteInput} - ${days_of_the_week[day]} (${block_start_time} - ${block_end_time})`,
-        day: day,
+        label: siteInput + ' - ' + days.map(day => `${days_of_the_week[day]} (${block_start_time} - ${block_end_time})`).join(', '),
+        days: days,
         start: block_start_time,
         end: block_end_time
       }
@@ -89,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var text_div = document.createElement("div");
         var p = document.createElement("p");
         p.textContent = site.label ? site.label : site.url;
+        p.classList.add("site-text");
         text_div.appendChild(p)
         li.appendChild(text_div)
 
@@ -99,17 +134,17 @@ document.addEventListener("DOMContentLoaded", function () {
         editButton.textContent = "Edit";
         editButton.id = "editSite";
         editButton.addEventListener("click", function () {
-
-          console.log('id', site.id)
-
           chrome.storage.sync.get("blockedSites", function (data) {
             var blockedSites = data.blockedSites;
             var editSite = blockedSites.find(blockedSite => blockedSite.id == site.id);
             if (editSite) {
+              var day_checkboxes = document.querySelectorAll('input[name="day"]')
               addSiteButton.innerHTML = "Edit Site";
               document.getElementById("blocked_site_id").value = editSite.id;
               document.getElementById("siteInput").value = editSite.url;
-              document.getElementById("day").value = editSite.day;
+              day_checkboxes.forEach(checkbox => {
+                checkbox.checked = editSite.days.some(day => day == checkbox.value)
+              })
               document.getElementById("block_start_time").value = editSite.start;
               document.getElementById("block_end_time").value = editSite.end;
             }
@@ -148,10 +183,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function resetForm() {
+    var day_checkboxes = document.querySelectorAll('input[name="day"]')
     addSiteButton.innerHTML = "Add Site";
     document.getElementById("blocked_site_id").value = null;
     document.getElementById("siteInput").value = "";
-    document.getElementById("day").value = "everyday";
+    day_checkboxes.forEach(checkbox => checkbox.checked = false)
     document.getElementById("block_start_time").value = "00:00";
     document.getElementById("block_end_time").value = "23:59";
   }
