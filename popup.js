@@ -1,69 +1,34 @@
 const days_of_the_week = {
-  "everyday" : "Everyday",
-  "0" : "Sunday",
-  "1" : "Monday",
-  "2" : "Tuesday",
-  "3" : "Wednesday",
-  "4" : "Thursday",
-  "5" : "Friday",
-  "6" : "Saturday",
+  "everyday": "Everyday",
+  "0": "Sunday",
+  "1": "Monday",
+  "2": "Tuesday",
+  "3": "Wednesday",
+  "4": "Thursday",
+  "5": "Friday",
+  "6": "Saturday",
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  var parentDiv = document.getElementById('days');
-
-  var checkboxPairDiv = document.createElement('div');
-  checkboxPairDiv.classList.add('checkbox-pair');
-
-  var keys = Object.keys(days_of_the_week)
-  keys.forEach((key, index) => {
-    var div = document.createElement('div');
-    div.classList.add('checkbox-div');
-
-    var checkbox = document.createElement('input');
-    checkbox.id = days_of_the_week[key] + '_' + key
-    checkbox.type = "checkbox";
-    checkbox.name = "day";
-    checkbox.value = key;
-    if (key == 'everyday') {
-      checkbox.addEventListener('change', function (e) {
-        var day_checkboxes = document.querySelectorAll('input[name="day"]');
-        if (e.target.checked) {
-          day_checkboxes.forEach(checkbox => {
-            if (checkbox.value !== "everyday") {
-              checkbox.disabled = true;
-              checkbox.checked = false;
-            }
-          })
-        } else {
-          day_checkboxes.forEach(checkbox => {
-            checkbox.disabled = false;
+  var everydayCheckbox = document.getElementById("everyday");
+  if (everydayCheckbox) {
+    everydayCheckbox.addEventListener('change', function (e) {
+      var day_checkboxes = document.querySelectorAll('input[name="day"]');
+      if (e.target.checked) {
+        day_checkboxes.forEach(checkbox => {
+          if (checkbox.value !== "everyday") {
+            checkbox.disabled = true;
             checkbox.checked = false;
-          })
-        }
-      });
-    }
-    div.appendChild(checkbox);
-
-    var label = document.createElement('label');
-    label.htmlFor = days_of_the_week[key] + '_' + key
-    label.textContent = days_of_the_week[key];
-    label.classList.add('checkbox-label');
-    div.appendChild(label);
-
-    checkboxPairDiv.appendChild(div);
-
-    var is_last_item = index == (keys.length - 1);
-
-    if (index % 2 !== 0 || is_last_item) {
-      parentDiv.appendChild(checkboxPairDiv);
-
-      if (!is_last_item) {
-        checkboxPairDiv = document.createElement('div');
-        checkboxPairDiv.classList.add('checkbox-pair');
+          }
+        })
+      } else {
+        day_checkboxes.forEach(checkbox => {
+          checkbox.disabled = false;
+          checkbox.checked = false;
+        })
       }
-    }
-  });
+    });
+  }
 
   var addSiteButton = document.getElementById("addSite");
   addSiteButton.addEventListener("click", function () {

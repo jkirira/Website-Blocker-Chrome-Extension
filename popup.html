@@ -11,19 +11,65 @@
   <hr />
   <div class="addSiteForm">
     <h3>Add / Edit Sites</h3>
+
     <input type="hidden" id="blocked_site_id">
+
     <h4>Add / Edit a site to block:</h4>
     <input type="text" id="siteInput" placeholder="e.g. google.com">
     <br />
+
     <h4>Day(s):</h4>
-    <div id="days"></div>
+    <div id="days">
+      <div class="checkbox-pair">
+        <div class="checkbox-div">
+          <input id="sunday" type="checkbox" name="day" value="0">
+          <label for="sunday" class="checkbox-label">Sunday</label>
+        </div>
+        <div class="checkbox-div">
+          <input id="monday" type="checkbox" name="day" value="1">
+          <label for="monday" class="checkbox-label">Monday</label>
+        </div>
+      </div>
+      <div class="checkbox-pair">
+        <div class="checkbox-div">
+          <input id="tuesday" type="checkbox" name="day" value="2">
+          <label for="tuesday" class="checkbox-label">Tuesday</label>
+        </div>
+        <div class="checkbox-div">
+          <input id="wednesday" type="checkbox" name="day" value="3">
+          <label for="wednesday" class="checkbox-label">Wednesday</label>
+        </div>
+      </div>
+      <div class="checkbox-pair">
+        <div class="checkbox-div">
+          <input id="thursday" type="checkbox" name="day" value="4">
+          <label for="thursday" class="checkbox-label">Thursday</label>
+        </div>
+        <div class="checkbox-div">
+          <input id="friday" type="checkbox" name="day" value="5">
+          <label for="friday" class="checkbox-label">Friday</label>
+        </div>
+      </div>
+      <div class="checkbox-pair">
+        <div class="checkbox-div">
+          <input id="saturday" type="checkbox" name="day" value="6">
+          <label for="saturday" class="checkbox-label">Saturday</label>
+        </div>
+        <div class="checkbox-div">
+          <input id="everyday" type="checkbox" name="day" value="everyday">
+          <label for="everyday" class="checkbox-label">Everyday</label>
+        </div>
+      </div>
+    </div>
     <br />
 
     <h4>From:</h4>
     <input type="time" id="block_start_time" name="block_start_time" value="00:00" required />
     <h4>To:</h4>
     <input type="time" id="block_end_time" name="block_end_time" value="23:59" required />
+
     <button id="addSite">Add Site</button>
+
   </div>
 </body>
 </html>
