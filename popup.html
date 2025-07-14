@@ -8,13 +8,16 @@
 <body>
   <h3>Blocked Websites</h3>
   <ul id="blockedList"></ul>
+  <hr />
   <div class="addSiteForm">
-    <h4>Add a site to block:</h4>
+    <h3>Add / Edit Sites</h3>
+    <input type="hidden" id="blocked_site_id">
+    <h4>Add / Edit a site to block:</h4>
     <input type="text" id="siteInput" placeholder="e.g. google.com">
     <h4>Day:</h4>
     <select id="day" value="everyday" required>
-      <option value="everyday">Everyday</option>
-      <!-- <option value="0">Sunday</option>
+      <!-- <option value="everyday">Everyday</option>
+      <option value="0">Sunday</option>
       <option value="1">Monday</option>
       <option value="2">Tuesday</option>
       <option value="3">Wednesday</option>

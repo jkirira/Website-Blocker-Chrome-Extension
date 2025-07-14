@@ -14,6 +14,8 @@
 body {
   border-radius: 20px;
   min-width: 300px;
+  padding-right: 12.5px;
+  padding-left: 12.5px;
 }
 
 h3 {
@@ -33,11 +35,11 @@ ul {
 }
 
 li {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 10px; */
 }
 
 .addSiteForm {
@@ -71,7 +73,17 @@ button:hover {
 
 #removeSite {
   background-color: #f44336;
+}
+
+#removeSite, #editSite {
   width: auto;
   padding: 5px 10px;
   border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 0;
+}
+
+.site-item {
+  display: flex;
+  flex-direction: column;
 }
