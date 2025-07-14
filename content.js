@@ -11,18 +11,18 @@ chrome.storage.sync.get("blockedSites", function(data) {
   var current_day = Today.getDay()
   var formatted_current_time = `${Today.getHours()}.${Today.getMinutes()}`;
 
-  var shouldBlock = blockedSites.some(site => {
+  var block = blockedSites.find(site => {
     var formatted_start_time = site.start.replace(":", ".")
     var formatted_end_time = site.end.replace(":", ".")
 
     return window.location.href.includes(site.url) &&
-            (current_day == site.day || site.day == "everyday") &&
+            site.days.some(day => current_day == day || day == "everyday") &&
             parseFloat(formatted_current_time) > parseFloat(formatted_start_time) &&
             parseFloat(formatted_current_time) < parseFloat(formatted_end_time)
   })
 
-  if (shouldBlock) {
+  if (!!block) {
     // empty the content of the page
-    document.documentElement.innerHTML = "Blocked.";
+    document.documentElement.innerHTML = block.url + " blocked from " + block.start + " to " + block.end;
   }
 });
