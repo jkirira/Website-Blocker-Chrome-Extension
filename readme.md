@@ -21,8 +21,8 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## Tutorial
 To learn how to build this project, check out the tutorial on [YouTube](https://youtu.be/wZcU07zfMSk).
 
-## Contributing
-Contributions are welcome! If you have any ideas or improvements, please open an issue or submit a pull request.
-
-## Contact
-For any questions or feedback, feel free to reach out to me at tom@tomshaw.dev
+## UPDATE
+- [x] Added editing functionality
+- [x] Added day-of-the-week based blocking
+- [x] Added time based blocking
+- [ ] Discourage deleting blocked websites
