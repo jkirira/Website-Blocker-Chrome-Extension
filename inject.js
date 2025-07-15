@@ -1,4 +1,4 @@
-chrome.storage.sync.get("blockedSites", function(data) {
+chrome.storage.sync.get("blockedSites", function (data) {
   var blockedSites = data.blockedSites;
 
   if (!blockedSites || !Array.isArray(blockedSites)) {
@@ -24,10 +24,10 @@ chrome.storage.sync.get("blockedSites", function(data) {
     var formatted_block_end_time = site.end.replace(":", ".")
 
     return (new RegExp('^' + site.url)).test(formatted_current_url) &&
-            site.days.some(day => current_day == day || day == "everyday") &&
-            parseFloat(formatted_current_time) > parseFloat(formatted_block_start_time) &&
-            parseFloat(formatted_current_time) < parseFloat(formatted_block_end_time) &&
-            site.active
+      site.days.some(day => current_day == day || day == "everyday") &&
+      parseFloat(formatted_current_time) > parseFloat(formatted_block_start_time) &&
+      parseFloat(formatted_current_time) < parseFloat(formatted_block_end_time) &&
+      site.active
   })
 
   if (!!block) {
