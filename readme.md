@@ -22,13 +22,13 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 To learn how to build this project, check out the tutorial on [YouTube](https://youtu.be/wZcU07zfMSk).
 
 <br/>
-<br />
 
-## Fork Updates:
-#### Already opened websites
+# Fork Updates:
+- **Issue with already opened websites:**
+
 I encountered an issue where if a blocked website is already open, the extension does not block further navigation within the already opened website. Only when you refresh the page would the blocking start to take effect.
 
-Using the code from here (https://stackoverflow.com/a/67729185)[https://stackoverflow.com/a/67729185] I made it such that a change in the url would also trigger the block check, thus addressing this 'issue'.
+Using the code from here [https://stackoverflow.com/a/67729185](https://stackoverflow.com/a/67729185) I made it such that a change in the url would also trigger the block check, thus addressing this 'issue'.
 
 This however did neccesitate a couple of changes in the code and thus the code here might be significantly different from the original repo.
 
