@@ -10,6 +10,10 @@ const days_of_the_week = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
+  var disableClickCount = null;
+  var disableSite = null;
+  var numberOfClicksToDisable = 100;
+
   var everydayCheckbox = document.getElementById("everyday");
   if (everydayCheckbox) {
     everydayCheckbox.addEventListener('change', function (e) {
@@ -94,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function updateBlockedList() {
+    disableClickCount = null;
+
     chrome.storage.sync.get("blockedSites", function (data) {
       var blockedSites = data.blockedSites;
       if (!blockedSites) {
@@ -144,6 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
         removeButton.textContent = "Remove";
         removeButton.id = "removeSite";
         removeButton.addEventListener("click", function () {
+          // if trying to delete
+          if (disableClickCount <= numberOfClicksToDisable) {
+            if (disableSite == site.id) {
+              disableClickCount = disableClickCount + 1;
+            } else {
+              disableClickCount = 1;
+            }
+
+            disableSite = site.id;
+            return;
+          }
+
           chrome.storage.sync.get("blockedSites", function (data) {
             var blockedSites = data.blockedSites;
             var index = blockedSites.findIndex(blockedSite => blockedSite.id == site.id);
@@ -171,6 +189,18 @@ document.addEventListener("DOMContentLoaded", function () {
         switchCheckbox.type = "checkbox";
         switchCheckbox.checked = site.active;
         switchCheckbox.addEventListener('change', function (e) {
+          // if trying to disable
+          if (!e.target.checked && disableClickCount <= numberOfClicksToDisable) {
+            if (disableSite == site.id) {
+              disableClickCount = disableClickCount + 1;
+            } else {
+              disableClickCount = 1;
+            }
+            e.target.checked = true;
+            disableSite = site.id;
+            return;
+          }
+
           chrome.storage.sync.get("blockedSites", function (data) {
             var blockedSites = data.blockedSites || [];
             blockedSites = blockedSites.map(blocked_site => {
@@ -208,6 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function resetForm() {
     var day_checkboxes = document.querySelectorAll('input[name="day"]')
     addSiteButton.innerHTML = "Add Site";
+    disableSite = null;
     document.getElementById("blocked_site_id").value = null;
     document.getElementById("siteInput").value = "";
     day_checkboxes.forEach(checkbox => {
@@ -219,4 +250,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   updateBlockedList();
+  resetForm();
 });
