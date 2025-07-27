@@ -23,6 +23,10 @@ chrome.storage.sync.get("blockedSites", function (data) {
     var formatted_block_start_time = site.start.replace(":", ".")
     var formatted_block_end_time = site.end.replace(":", ".")
 
+    if ((new RegExp('^' + "00.")).test(formatted_block_end_time)) {
+      formatted_block_end_time = formatted_block_end_time.replace("00.", "24.");
+    }
+
     return (new RegExp('^' + site.url)).test(formatted_current_url) &&
       site.days.some(day => current_day == day || day == "everyday") &&
       parseFloat(formatted_current_time) > parseFloat(formatted_block_start_time) &&
