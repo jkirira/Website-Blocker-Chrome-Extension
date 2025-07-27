@@ -126,6 +126,13 @@ document.addEventListener("DOMContentLoaded", function () {
         editButton.textContent = "Edit";
         editButton.id = "editSite";
         editButton.addEventListener("click", function () {
+          // if trying to edit
+          disableClickCount = (disableSite == site.id) ? disableClickCount + 1 : 1;
+          disableSite = site.id;
+          if (disableClickCount < numberOfClicksToDisable) {
+            return;
+          }
+
           chrome.storage.sync.get("blockedSites", function (data) {
             var blockedSites = data.blockedSites;
             var editSite = blockedSites.find(blockedSite => blockedSite.id == site.id);
