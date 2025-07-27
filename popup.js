@@ -151,14 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
         removeButton.id = "removeSite";
         removeButton.addEventListener("click", function () {
           // if trying to delete
-          if (disableClickCount <= numberOfClicksToDisable) {
-            if (disableSite == site.id) {
-              disableClickCount = disableClickCount + 1;
-            } else {
-              disableClickCount = 1;
-            }
-
-            disableSite = site.id;
+          disableClickCount = (disableSite == site.id) ? disableClickCount + 1 : 1;
+          disableSite = site.id;
+          if (disableClickCount < numberOfClicksToDisable) {
             return;
           }
 
@@ -190,14 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
         switchCheckbox.checked = site.active;
         switchCheckbox.addEventListener('change', function (e) {
           // if trying to disable
-          if (!e.target.checked && disableClickCount <= numberOfClicksToDisable) {
-            if (disableSite == site.id) {
-              disableClickCount = disableClickCount + 1;
-            } else {
-              disableClickCount = 1;
-            }
+          disableClickCount = (disableSite == site.id) ? disableClickCount + 1 : 1;
+          disableSite = site.id;
+          if (!e.target.checked && disableClickCount < numberOfClicksToDisable) {
             e.target.checked = true;
-            disableSite = site.id;
             return;
           }
 
