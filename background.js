@@ -13,7 +13,7 @@ function injectScript(tabId) {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 	// check for a URL in the changeInfo parameter (url is only added when it is changed)
-	if (changeInfo.url && !(new RegExp('^' + 'chrome://')).test(changeInfo.url)) {
+	if (changeInfo.url && (new RegExp('^' + 'http')).test(changeInfo.url)) {
 
 		// calls the inject function
 		injectScript(tabId);
